@@ -1,0 +1,53 @@
+{% extends "default:query.html" %}
+{% block content %}
+<!-- Create a div where the graph will take place -->
+<div id="myplot"></div>
+{{ super() }}
+<script type="module">
+
+    (async () => {
+
+        // set the dimensions and margins of the graph
+        var margin = { top: 10, right: 30, bottom: 30, left: 40 },
+            width = 460 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
+
+        // append the svg object to the body of the page
+        var svg = d3.select("#my_dataviz")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");
+
+        const res = await fetch("{{ renderers['json'] }}", {
+            method: 'GET',
+        })
+        if (res.status !== 200) {
+            const data = await res.json()
+            console.error(data)
+            return
+        }
+
+        const data = await res.json()
+        const parser = d3.utcParse("%Y-%m");
+        const rows = data.rows.map(d => ({ month: parser(d.month), count: d.count }))
+        const plot = Plot.plot({
+            marginBottom: 50,
+            x: { interval: "month", label: null },
+            y: { label: "Number of coffee papers" },
+            marks: [
+                Plot.axisX({ tickFormat: "%b '%y", ticks: 20, tickRotate: -30 }),
+                Plot.barY(rows, { x: "month", y: "count" }),
+                Plot.ruleY([0])
+            ]
+        });
+
+
+        const div = document.querySelector("#myplot");
+        div.append(plot);
+
+    })();
+</script>
+{% endblock %}

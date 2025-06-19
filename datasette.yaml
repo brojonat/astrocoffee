@@ -1,0 +1,27 @@
+extra_css_urls:
+- https://simonwillison.net/static/css/all.bf8cd891642c.css
+extra_js_urls:
+- "https://cdn.jsdelivr.net/npm/d3@7"
+- "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6"
+sql_time_limit_ms: 5000
+plugins:
+  datasette-cors:
+      allow_all: true
+
+databases:
+  coffee:
+    queries:
+      monthly:
+        sql: |-
+          SELECT
+            CONCAT(strftime('%Y', date), '-', strftime("%m", date)) as "month",
+            count(*) as "count"
+          FROM
+            daily
+          GROUP BY
+            "month"
+          ORDER BY
+            "month" ASC
+        title: Monthly Coffee Paper Count
+        description_html: |-
+          <p>This shows the number of papers added to the archive each month.</p>
