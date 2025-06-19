@@ -1,14 +1,16 @@
 [project]
+dependencies = [
+  "beautifulsoup4>=4.13.3",
+  "click>=8.1.8",
+  "html5lib>=1.1",
+  "lxml>=5.3.0",
+  "requests>=2.32.3",
+  "sqlite-utils>=3.38",
+  "datasette>=1.0a19",
+  "datasette-cors",
+]
+description = "The Daily Brew Archive"
 name = "astrocoffee"
-version = "0.1.0"
-description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = [
-    "beautifulsoup4>=4.13.3",
-    "click>=8.1.8",
-    "html5lib>=1.1",
-    "lxml>=5.3.0",
-    "requests>=2.32.3",
-    "sqlite-utils>=3.38",
-]
+version = "0.1.0"

@@ -6,7 +6,7 @@ extra_js_urls:
 sql_time_limit_ms: 5000
 plugins:
   datasette-cors:
-      allow_all: true
+    allow_all: true
 
 databases:
   coffee:
@@ -22,6 +22,5 @@ databases:
             "month"
           ORDER BY
             "month" ASC
-        title: Monthly Coffee Paper Count
-        description_html: |-
-          <p>This shows the number of papers added to the archive each month.</p>
+        title: "Monthly Coffee Paper Count"
+        description_html: "<p>This shows the number of papers added to the archive each month.</p>"
